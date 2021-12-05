@@ -1,0 +1,167 @@
+{
+	"info": {
+		"_postman_id": "0bf5f97d-0fc0-4a16-a8c5-69735b9af9a4",
+		"name": "Elearning",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response has post id\", function () {\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    if (jsonData.id) {\r",
+							"        pm.collectionVariables.set(\"POST_ID\", jsonData.id);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"create post\",\r\n    \"body\": \"test create post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{be-host}}/posts",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all posts",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{be-host}}/posts",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update post",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"update post\",\r\n    \"body\": \"test update post\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{be-host}}/posts/{{POST_ID}}",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"posts",
+						"{{POST_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get post by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{be-host}}/posts/{{POST_ID}}",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"posts",
+						"{{POST_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete post",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{be-host}}/posts/{{POST_ID}}",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"posts",
+						"{{POST_ID}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "POST_ID",
+			"value": ""
+		}
+	]
+}
