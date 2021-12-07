@@ -165,7 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        BlackBits\LaravelCognitoAuth\CognitoAuthServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -174,7 +174,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\CognitoAuthServiceProvider::class,
 
     ],
 

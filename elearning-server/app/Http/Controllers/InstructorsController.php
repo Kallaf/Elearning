@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Instructor;
-use App\Cognito\CognitoClient;
+use BlackBits\LaravelCognitoAuth\CognitoClient;
 
 class InstructorsController extends Controller
 {
 
-    public function register(Request $request)
+    public function register(Request $request, CognitoClient $cognitoClient)
     {
         $this->validate($request, [
             'name' => 'required',
@@ -30,7 +30,7 @@ class InstructorsController extends Controller
             $attributes[$userField] = $request->$userField;
         }
 
-        $result = app()->make(CognitoClient::class)->register($request->email, $request->password, $attributes);
+        $result = $cognitoClient->register($request->email, $request->password, $attributes);
 
         if ($result) {
             $instructor = new Instructor;
