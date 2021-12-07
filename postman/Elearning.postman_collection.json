@@ -56,6 +56,56 @@
 			"response": []
 		},
 		{
+			"name": "Register instructor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"EMAIL\", \"ahmed.elkalaf+8@enozom.com\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{EMAIL}}\",\r\n    \"email\": \"{{EMAIL}}\",\r\n    \"password\": \"Ahmed@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{be-host}}/instructors",
+					"host": [
+						"{{be-host}}"
+					],
+					"path": [
+						"instructors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get all posts",
 			"event": [
 				{
@@ -161,6 +211,10 @@
 	"variable": [
 		{
 			"key": "POST_ID",
+			"value": ""
+		},
+		{
+			"key": "EMAIL",
 			"value": ""
 		}
 	]
