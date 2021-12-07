@@ -16,7 +16,10 @@ class InstructorsController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-
+        $instructor = Instructor::firstWhere('email', $request->email);
+        if ($instructor) {
+            return "Email already exists";
+        }
         $attributes = [];
 
         $userFields = ['name', 'email'];
@@ -29,18 +32,20 @@ class InstructorsController extends Controller
 
             $attributes[$userField] = $request->$userField;
         }
-
-        $result = $cognitoClient->register($request->email, $request->password, $attributes);
-
-        if ($result) {
+        try {
+            $cognitoClient->register(
+                $request->email, $request->password, $attributes
+            );
+            $user = $cognitoClient->getUser($request->email);
+            $userSub = collect($user['UserAttributes'])->where('Name', 'sub')->first->Value['Value'];
             $instructor = new Instructor;
             $instructor->name = $request->name;
             $instructor->email = $request->email;
-            $instructor->userId = $result['UserSub'];
+            $instructor->userId = $userSub;
             $instructor->save();
             return $instructor;
-        } else {
-            return "Email already exists";
+        } catch (CognitoIdentityProviderException $e) {
+            return $e;
         }
     }
 }
