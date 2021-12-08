@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('jwt.customAuth')->get('/current-instructor', [InstructorsController::class, 'getCurrentInstructor']);
+
 Route::resource('/posts', 'App\Http\Controllers\PostsController');
 
 Route::post('/instructors', [InstructorsController::class, 'register']);

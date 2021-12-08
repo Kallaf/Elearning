@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Instructor;
 use BlackBits\LaravelCognitoAuth\CognitoClient;
+use Exception;
 
 class InstructorsController extends Controller
 {
@@ -44,8 +45,17 @@ class InstructorsController extends Controller
             $instructor->userId = $userSub;
             $instructor->save();
             return $instructor;
-        } catch (CognitoIdentityProviderException $e) {
-            return $e;
+        } catch (Exception $e) {
+            throw $e;
         }
+    }
+
+    public function getCurrentInstructor(Request $request)
+    {
+        $instructor = Instructor::firstWhere('userId', $request->get('userId'));
+        if ($instructor) {
+            return $instructor;
+        }
+        return response("Instructor not found", 404);
     }
 }

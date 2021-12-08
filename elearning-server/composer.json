@@ -7,7 +7,9 @@
     "require": {
         "php": "^7.3|^8.0",
         "black-bits/laravel-cognito-auth": "^0.1.14",
+        "bref/bref": "^1.4",
         "fideloper/proxy": "^4.4",
+        "firebase/php-jwt": "^5.5",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
